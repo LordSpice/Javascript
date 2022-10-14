@@ -15,7 +15,7 @@
     };
 
     // Create Dino Objects
-    let dinos = [];
+    const dinos = [];
     fetch('./dino.json')
         .then(result => result.json())
         .then(data => data.Dinos
@@ -24,7 +24,7 @@
             )
         );
 
-    // console.log(dinos);
+    console.log(dinos);
     
     // dinos.forEach(dino => {
     //     species = dino.species;
@@ -41,7 +41,7 @@
     // });
 
     // Create Human Object
-    human = {
+    const human = {
         name: '',
         height: 0,
         weight: '',
@@ -93,6 +93,11 @@
 
     // Generate Tiles for each Dino in Array
     const grid = document.getElementById('grid');
+
+    const tiles = [];
+    dinos.forEach(dino => {
+        
+    })
         // Add tiles to DOM
 
     // Remove form from screen
