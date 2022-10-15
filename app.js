@@ -20,7 +20,11 @@
         .then(result => result.json())
         .then(data => data.Dinos
             .forEach(
-                dino => dinos.push(new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.when, dino.fact, './images/' + dino.species + '.png'))
+                dino => {
+                    const image = './images/' + dino.species.toLowerCase() + '.png';
+                    console.log(image);
+                    dinos.push(new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.when, dino.fact, image))
+                }
             )
         );
 
@@ -44,7 +48,7 @@
     const human = {
         name: '',
         height: 0,
-        weight: '',
+        weight: 0,
         diet: '',
         image: './images/human.png',
     };
@@ -53,11 +57,26 @@
     document.getElementById('btn').addEventListener('click', getHuman);
 
     function getHuman() {
-        human.name = document.getElementById('name').value;
-        human.height = (parseInt(document.getElementById('feet').value) * 12) + parseInt(document.getElementById('inches').value);
-        human.weight = document.getElementById('weight').value;
-        human.diet = document.getElementById('diet').value;
-           
+        const name = document.getElementById('name').value;
+        const feet = document.getElementById('feet').value;
+        const inches = document.getElementById('inches').value;
+        const weight = document.getElementById('weight').value;
+        const diet = document.getElementById('diet').value;
+        
+        let valid = true;
+
+        name != '' ? human.name = name : valid = false;
+        feet != '' && inches != '' ? human.height = (parseInt(feet) * 12) + parseInt(inches) : valid = false;
+        weight != '' ? human.weight = parseInt(weight) : valid = false;
+        human.diet = diet;
+        
+        if (valid) {
+            removeForm()
+            initializeDOM()
+        } else {
+            alert('All fields must be filled')
+        }
+
         console.log(human);
     }
     
@@ -93,14 +112,49 @@
 
     // Generate Tiles for each Dino in Array
     const grid = document.getElementById('grid');
-
     const tiles = [];
-    dinos.forEach(dino => {
+
+    function getTiles() {
+        dinos.forEach(dino => {
+            const container = document.createElement('div');
+            container.className = 'grid-item';
+            
+            const title = document.createElement('h3');
+            const image = document.createElement('img')
+            const fact = document.createElement('p')
         
-    })
+            title.innerHTML = dino.species;
+            image.src = dino.image;
+            fact.innerHTML = dino.fact;
+
+            container.appendChild(title);
+            container.appendChild(image);
+            container.appendChild(fact);
+
+            tiles.push(container);
+        })
+    }
         // Add tiles to DOM
+        function initializeDOM() {
+            getTiles()
+
+            console.log(tiles)
+
+            for (let i = 0; i < tiles.length; i++) {
+                if (i < 4) {
+                    grid.appendChild(tiles[i])
+                } else if (i == 4) {
+                    
+                    grid.appendChild()
+                }
+            }
+        }
 
     // Remove form from screen
+    function removeForm() {
+        document.getElementById('dino-compare').remove();
+    }
 
+    // document.getElementById('btn').addEventListener('click', removeForm);
 
 // On button click, prepare and display infographic
