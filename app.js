@@ -22,8 +22,8 @@
             .forEach(
                 dino => {
                     const image = './images/' + dino.species.toLowerCase() + '.png';
-                    console.log(image);
-                    dinos.push(new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.when, dino.fact, image))
+                    // console.log(dino.fact);
+                    dinos.push(new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact, image))
                 }
             )
         );
@@ -116,21 +116,10 @@
 
     function getTiles() {
         dinos.forEach(dino => {
-            const container = document.createElement('div');
-            container.className = 'grid-item';
-            
-            const title = document.createElement('h3');
-            const image = document.createElement('img')
-            const fact = document.createElement('p')
-        
-            title.innerHTML = dino.species;
-            image.src = dino.image;
-            fact.innerHTML = dino.fact;
+            // console.log(dino)
+            const container = createTile(dino.species, dino.image, dino.fact);
 
-            container.appendChild(title);
-            container.appendChild(image);
-            container.appendChild(fact);
-
+            console.log(container);
             tiles.push(container);
         })
     }
@@ -140,12 +129,14 @@
 
             console.log(tiles)
 
-            for (let i = 0; i < tiles.length; i++) {
+            for (let i = 0; i <= tiles.length; i++) {
                 if (i < 4) {
                     grid.appendChild(tiles[i])
                 } else if (i == 4) {
-                    
-                    grid.appendChild()
+                    const humanTile = createTile(human.name, human.image);
+                    grid.appendChild(humanTile)
+                } else {
+                    grid.appendChild(tiles[i - 1]);
                 }
             }
         }
@@ -155,6 +146,25 @@
         document.getElementById('dino-compare').remove();
     }
 
+    function createTile(title, image, fact = '') {
+        // console.log(image, fact)
+        const container = document.createElement('div');
+        container.className = 'grid-item';
+        
+        this.title = document.createElement('h3');
+        this.image = document.createElement('img');
+        this.fact = document.createElement('p');
+    
+        this.title.innerHTML = title;
+        this.image.src = image;
+        this.fact.innerHTML = fact;
+
+        container.appendChild(this.title);
+        container.appendChild(this.image);
+        container.appendChild(this.fact);
+
+        return container;
+    }
     // document.getElementById('btn').addEventListener('click', removeForm);
 
 // On button click, prepare and display infographic
