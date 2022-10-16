@@ -84,9 +84,9 @@
     // NOTE: Weight in JSON file is in lbs, height in inches. 
     function compareWeight(dino) {
         if (dino.weight == human.weight) {
-            return 'You weigh the same as a ' + dino.name;
+            return 'You weigh the same as a ' + dino.species;
         } else {
-            return dino.weight < human.weight ? 'You weigh less than a ' + dino.name : 'You weight more than a ' + dino.name;
+            return dino.weight > human.weight ? 'You weigh less than a ' + dino.species : 'You weight more than a ' + dino.species;
         }
     }
     
@@ -94,19 +94,19 @@
     // NOTE: Weight in JSON file is in lbs, height in inches.
     function compareHeight(dino) {
         if (dino.height == human.height) {
-            return 'Your height is the same as a ' + dino.name;
+            return 'Your height is the same as a ' + dino.species;
         } else {
-            return dino.height < human.height ? 'Your height is less than a ' + dino.name : 'Your height is more than a ' + dino.name;
+            return dino.height > human.height ? 'Your height is less than a ' + dino.species : 'Your height is more than a ' + dino.species;
         }
     }
     
     // Create Dino Compare Method 3
     // NOTE: Weight in JSON file is in lbs, height in inches.
     function compareName(dino) {
-        if (dino.name.length == human.name.length) {
-            return 'Your name is as long as the name of a ' + dino.name;
+        if (dino.species.length == human.name.length) {
+            return 'Your name is as long as the name of a ' + dino.species;
         } else {
-            return dino.name.length < human.name.length ? 'Your name is shorter than the name of a ' + dino.name : 'Your name is longer than the name of a ' + dino.name;
+            return dino.species.length > human.name.length ? 'Your name is shorter than the name of a ' + dino.species : 'Your name is longer than the name of a ' + dino.species;
         }
     }
 
@@ -117,7 +117,20 @@
     function getTiles() {
         dinos.forEach(dino => {
             // console.log(dino)
-            const container = createTile(dino.species, dino.image, dino.fact);
+            /* @var ran random number to specify fact
+            ** multiplying by 5 to make compareHeight and dino.fact more frequent 
+            */
+            const ran = Math.floor(Math.random() * 5)
+
+            let fact = dino.fact;
+            switch (ran) {
+                case 0: fact = compareHeight(dino); break;
+                case 1: fact = compareHeight(dino); break;
+                case 2: fact = compareWeight(dino); break;
+                case 3: fact = compareName(dino); break;
+            }
+
+            const container = createTile(dino.species, dino.image, fact);
 
             console.log(container);
             tiles.push(container);
