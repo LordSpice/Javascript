@@ -22,27 +22,10 @@
             .forEach(
                 dino => {
                     const image = './images/' + dino.species.toLowerCase() + '.png';
-                    // console.log(dino.fact);
                     dinos.push(new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact, image))
                 }
             )
         );
-
-    console.log(dinos);
-    
-    // dinos.forEach(dino => {
-    //     species = dino.species;
-    //     weight = dino.weight;
-    //     height = dino.height;
-    //     diet = dino.diet;
-    //     where = dino.where;
-    //     when = dino.when;
-    //     fact = dino.fact;
-    //     image = './images/' + dino.species + '.png';
-
-    //     dino = new Dino(species, weight, height, diet, where, when, fact, image)
-    //     console.log(dino);
-    // });
 
     // Create Human Object
     const human = {
@@ -76,8 +59,6 @@
         } else {
             alert('All fields must be filled')
         }
-
-        console.log(human);
     }
     
     // Create Dino Compare Method 1
@@ -116,31 +97,30 @@
 
     function getTiles() {
         dinos.forEach(dino => {
-            // console.log(dino)
             /* @var ran random number to specify fact
             ** multiplying by 5 to make compareHeight and dino.fact more frequent 
             */
             const ran = Math.floor(Math.random() * 5)
-
+            
+            pigeon = dino.species.toLowerCase() == 'pigeon' ? true : false;
             let fact = dino.fact;
-            switch (ran) {
-                case 0: fact = compareHeight(dino); break;
-                case 1: fact = compareHeight(dino); break;
-                case 2: fact = compareWeight(dino); break;
-                case 3: fact = compareName(dino); break;
-            }
 
+            if (!pigeon) {
+                switch (ran) {
+                    case 0: fact = compareHeight(dino); break;
+                    case 1: fact = compareHeight(dino); break;
+                    case 2: fact = compareWeight(dino); break;
+                    case 3: fact = compareName(dino); break;
+                }
+            }
             const container = createTile(dino.species, dino.image, fact);
 
-            console.log(container);
             tiles.push(container);
         })
     }
         // Add tiles to DOM
         function initializeDOM() {
             getTiles()
-
-            console.log(tiles)
 
             for (let i = 0; i <= tiles.length; i++) {
                 if (i < 4) {
@@ -160,7 +140,6 @@
     }
 
     function createTile(title, image, fact = '') {
-        // console.log(image, fact)
         const container = document.createElement('div');
         container.className = 'grid-item';
         
@@ -178,6 +157,5 @@
 
         return container;
     }
-    // document.getElementById('btn').addEventListener('click', removeForm);
 
 // On button click, prepare and display infographic
